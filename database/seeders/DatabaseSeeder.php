@@ -20,10 +20,10 @@ class DatabaseSeeder extends Seeder
         Category::factory(6)->create();
 
         User::factory()->has(
-                Post::factory(),
-         )->create([
-             'name' => 'Test User',
-             'email' => 'test@example.com',
-         ]);
+            Post::factory(15),
+        )->create([
+            'name' => 'Test User',
+            'email' => 'test@example.com',
+        ]);
     }
 }
