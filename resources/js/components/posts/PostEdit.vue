@@ -6,14 +6,14 @@
             </p>
         </div>
     </div>
-    <form class="space-y-6" @submit.prevent="savePost">
+    <form class="space-y-6" @submit.prevent="editPost">
         <div class="space-y-4 rounded-md shadow-sm">
             <div>
                 <label for="name" class="block text-sm font-medium text-gray-700">Titre</label>
                 <div class="mt-1">
                     <input type="text" name="name" id="name"
                             class="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                            v-model="form.title">
+                            v-model="post.title">
                 </div>
             </div>
             <div>
@@ -21,15 +21,14 @@
                 <div class="mt-1">
                     <textarea  type="text" name="email" id="email"
                             class="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                            v-model="form.content">
+                            v-model="post.content">
                     </textarea>
                 </div>
             </div>
             <div>
                 <label for="address" class="block text-sm font-medium text-gray-700">Categorie</label>
-                <select class="form-control" name="category_id" id="category_id" v-model="form.category_id">
-                    <option disabled value="">Choisissez une catégorie</option>
-                    <option v-for="item in categories" :value="item.id">
+                <select class="form-control" name="category_id" id="category_id" v-model="post.category_id">
+                    <option v-for="item in categories" :value="item.id" :selected="item.id == post.category.id">
                         {{ item.name }}
                     </option>
                 </select>
@@ -48,33 +47,37 @@
         </div>
         <button type="submit"
                 class="inline-flex items-center px-4 py-2 text-xs font-semibold tracking-widest text-white uppercase transition duration-150 ease-in-out bg-gray-800 border border-transparent rounded-md ring-gray-300 hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring disabled:opacity-25">
-            Créer
+            Modifier
         </button>
     </form>
 </template>
 
 <script setup>
-import usePosts from '../../composables/posts'
+import useCompanies from '@/composables/posts'
 import useCategories from '../../composables/categories'
-import { onMounted, reactive } from 'vue'
+import { onMounted } from 'vue';
 
-const form = reactive({
-    title: '',
-    content: '',
-    category_id: '',
-    image: null,
-})
-
-const { errors, storePost } = usePosts()
+const { errors, post, updatePost, getPost } = useCompanies()
 const { categories, getCategories } = useCategories()
 
-const savePost = async () => {
-    await storePost({ ...form })
+const props = defineProps({
+    id: {
+        required: true,
+        type: String
+    }
+})
+
+onMounted(() => {
+    getPost(props.id)
+    getCategories()
+})
+
+const editPost = async () => {
+    await updatePost(props.id)
 }
 
 const onChange = async (e) => {
     form.image = e.target.files[0];
 }
 
-onMounted(getCategories)
 </script>
