@@ -21,8 +21,17 @@ export default function usePosts() {
 
     const storePost = async (data) => {
         errors.value = ''
+        let formData = new FormData();
+
+        for (let key in data) {
+            formData.append(key, data[key]);
+        }
         try {
-            await axios.post('/api/posts', data)
+            await axios.post('/api/posts', data,{
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            })
             await router.push({ name: 'posts.index' })
         } catch (e) {
             if (e.response.status === 422) {
