@@ -21,7 +21,7 @@ class PostFactory extends Factory
         return [
             'title' => fake()->title(),
             'content' => fake()->text(100),
-            'image' => '/posts/test.webp',
+            'image' => '/posts/paysage.jpg',
             'user_id' => User::factory(),
             'category_id' => Category::factory(),
         ];

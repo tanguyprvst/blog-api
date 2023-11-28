@@ -1,10 +1,17 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
+import HomePage from '@/components/home/Index.vue'
+import Login from '@/components/auth/Login.vue'
 import PostIndex from '@/components/posts/PostIndex.vue'
 import PostCreate from '@/components/posts/PostCreate.vue'
 import PostEdit from '@/components/posts/PostEdit.vue'
 
 const routes = [
+    {
+        path: "/",
+        name: "home",
+        component: HomePage,
+    },
     {
         path: '/dashboard',
         name: 'posts.index',
@@ -20,7 +27,12 @@ const routes = [
         name: 'posts.edit',
         component: PostEdit,
         props: true
-    }, 
+    },
+    {
+        path: '/login',
+        name: 'login.index',
+        component: Login
+    },
 ];
 
 export default createRouter({
