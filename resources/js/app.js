@@ -8,11 +8,10 @@ Alpine.start();
 
 import { createApp } from 'vue';
 import router from './router/index.js'
-
-import PostIndex from './components/posts/PostIndex.vue';
+import HomePage from './components/home/Index.vue';
 
 createApp({
     components: {
-        PostIndex
+        HomePage
     }
 }).use(router).mount('#app')

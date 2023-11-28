@@ -22,7 +22,7 @@
             </tr>
             </thead>
             <tbody class="bg-white divide-y divide-gray-200 divide-solid">
-            <template v-for="item in posts" :key="item.id">
+            <template v-for="item in user.posts" :key="item.id">
                 <tr class="bg-white">
                     <td class="px-6 py-4 text-sm leading-5 text-gray-900 whitespace-no-wrap">
                         {{ item.title }}
@@ -51,8 +51,10 @@
 <script setup>
 import usePosts from '@/composables/posts'
 import { onMounted } from 'vue';
+import useUsers from '@/composables/user';
 
 const { posts, getPosts, destroyPost  } = usePosts()
+const { user, getUser  } = useUsers()
 
 const deletePost = async (id) => {
     if (!window.confirm('Etes vous sur?')) {
@@ -60,8 +62,11 @@ const deletePost = async (id) => {
     }
 
     await destroyPost(id)
-    await getPosts()
+    await getUser()
+    console.log(user);
 }
 
-onMounted(getPosts)
+onMounted(() => {
+    getUser()
+})
 </script>
