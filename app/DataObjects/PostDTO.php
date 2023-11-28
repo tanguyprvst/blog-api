@@ -2,7 +2,7 @@
 
 namespace App\DataObjects;
 
-class PostDTO 
+class PostDTO
 {
     public function __construct(
         private readonly string $title,
@@ -10,13 +10,13 @@ class PostDTO
         private readonly int $category_id,
         private readonly int $user_id,
         private readonly string $image
-    ){
+    ) {
     }
 
     /**
      * @return array<string, int|string|bool|null>
      */
-    public function toArray() : array
+    public function toArray(): array
     {
         return [
             'title' => $this->title,

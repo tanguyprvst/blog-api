@@ -2,17 +2,18 @@
 
 namespace App\DataObjects;
 
-class FileDTO 
+class FileDTO
 {
     private string $name;
 
     public function __construct(
         $image
-    ){
+    ) {
         $this->name = $image->getClientOriginalName();
     }
 
-    public function getName() {
+    public function getName()
+    {
         return $this->name;
     }
 }
